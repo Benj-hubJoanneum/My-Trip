@@ -1,45 +1,47 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("androidx.navigation.safeargs.kotlin") version "2.9.5"
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "at.fhj.iit.ims.mytrip"
     compileSdk = 36
-
     defaultConfig {
         applicationId = "at.fhj.iit.ims.mytrip"
-        minSdk = 36
+        minSdk = 34
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
+    buildFeatures {
+        compose = true
+        viewBinding = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-    buildFeatures {
-        viewBinding = true
-    }
+    kotlinOptions { jvmTarget = "11" }
 }
 
+composeCompiler {
+    includeSourceInformation = true
+}
 dependencies {
+    implementation(platform(libs.androidx.compose.bom))
+
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+
+    implementation(libs.androidx.compose.material3)
+
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.coil.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -47,6 +49,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
