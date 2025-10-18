@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="at.fhj.iit.ims.mytrip.UI.FirstFragment"
+        android:name="at.fhj.iit.ims.mytrip.ui.FirstFragment"
         android:label="Landmarks">
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="at.fhj.iit.ims.mytrip.UI.SecondFragment"
+        android:name="at.fhj.iit.ims.mytrip.ui.SecondFragment"
         android:label="Details">
         <argument
             android:name="landmarkId"
