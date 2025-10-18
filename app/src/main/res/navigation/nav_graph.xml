@@ -2,24 +2,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/LandmarkListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="at.fhj.iit.ims.mytrip.ui.FirstFragment"
+        android:id="@+id/LandmarkListFragment"
+        android:name="at.fhj.iit.ims.mytrip.ui.LandmarkListFragment"
         android:label="Landmarks">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_LandmarkList_to_LandmarkObjectPageFragment"
+            app:destination="@id/LandmarkObjectPageFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="at.fhj.iit.ims.mytrip.ui.SecondFragment"
+        android:id="@+id/LandmarkObjectPageFragment"
+        android:name="at.fhj.iit.ims.mytrip.ui.LandmarkObjectPageFragment"
         android:label="Details">
         <argument
             android:name="landmarkId"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
-
 </navigation>
+

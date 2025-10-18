@@ -55,4 +55,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(libs.coil.compose)
+
+    implementation(libs.androidx.compose.material.icons.extended)
+
 }
