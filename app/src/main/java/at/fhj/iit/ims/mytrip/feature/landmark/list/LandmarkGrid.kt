@@ -1,19 +1,7 @@
-package at.fhj.iit.ims.mytrip
-
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+package at.fhj.iit.ims.mytrip.feature.landmark.list
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -24,45 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import at.fhj.iit.ims.mytrip.repository.LandmarkRepository
-import at.fhj.iit.ims.mytrip.model.Landmark
+import at.fhj.iit.ims.mytrip.core.model.Landmark
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 
-class LandmarkListFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = ComposeView(requireContext()).apply {
-        setContent {
-            MaterialTheme {
-                LandmarkStaggeredGrid(
-                    landmarks = LandmarkRepository.getAll(),
-                    onLandmarkClick = { landmark ->
-                        runCatching {
-                            findNavController().navigate(
-                                // Make sure this action exists in nav_graph.xml
-                                R.id.action_LandmarkList_to_LandmarkObjectPageFragment,
-                                bundleOf("landmarkId" to landmark.id)
-                            )
-                        }
-                    }
-                )
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun LandmarkStaggeredGrid(
+fun LandmarkGrid(
     landmarks: List<Landmark>,
     onLandmarkClick: (Landmark) -> Unit
 ) {
@@ -78,6 +37,7 @@ private fun LandmarkStaggeredGrid(
         }
     }
 }
+
 
 @Composable
 private fun LandmarkTile(

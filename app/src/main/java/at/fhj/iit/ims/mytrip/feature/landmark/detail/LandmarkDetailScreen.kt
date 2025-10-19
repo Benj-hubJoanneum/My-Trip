@@ -1,4 +1,5 @@
-package at.fhj.iit.ims.mytrip.objectpage
+package at.fhj.iit.ims.mytrip.feature.landmark.detail
+
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,52 +16,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.aspectRatio
 import at.fhj.iit.ims.mytrip.core.model.Landmark
-import at.fhj.iit.ims.mytrip.core.model.LandmarkComment
-import at.fhj.iit.ims.mytrip.core.data.DefaultLandmarkRepository
+import at.fhj.iit.ims.mytrip.ui.components.CommentCard
+import at.fhj.iit.ims.mytrip.ui.components.RatingBar
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 
+@Composable private fun NotFoundScreen(onBack: () -> Unit = {}) { Scaffold { innerPadding -> Box( modifier = Modifier .padding(innerPadding) .fillMaxSize(), contentAlignment = Alignment.Center ) { Text( text = "Item not found", style = MaterialTheme.typography.bodyLarge ) } } }
 @Composable
-private fun NotFoundScreen(onBack: () -> Unit = {}) {
-    Scaffold { innerPadding ->
-        Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Item not found",
-                style = MaterialTheme.typography.bodyLarge
-            )
-        }
-    }
-}
-
-@Composable
-fun LandmarkObjectPage(
-    landmarkId: Int,
-    onBack: () -> Unit = {}
-) {
-    // Use repository instance (the old object + static call is gone)
-    val repo = DefaultLandmarkRepository()
-    val landmark = repo.getById(landmarkId)
-
+fun LandmarkDetailScreen(landmark: Landmark?, onBack: () -> Unit = {}) {
     if (landmark == null) {
         NotFoundScreen(onBack)
     } else {
-        LandmarkObjectPage(landmark = landmark, onBack = onBack)
+        Content(landmark)
     }
 }
 
+
 @Composable
-fun LandmarkObjectPage(
-    landmark: Landmark,
-    onBack: () -> Unit = {}
-) {
+private fun Content(landmark: Landmark) {
     Scaffold { inner ->
         val scroll = rememberScrollState()
         Column(
@@ -69,7 +44,7 @@ fun LandmarkObjectPage(
                 .fillMaxSize()
                 .verticalScroll(scroll)
         ) {
-            // --- Image ---
+// --- Image ---
             SubcomposeAsyncImage(
                 model = landmark.imageUrl,
                 contentDescription = landmark.name,
@@ -110,7 +85,8 @@ fun LandmarkObjectPage(
                 }
             }
 
-            // --- Landmark info ---
+
+// --- Landmark info ---
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -119,49 +95,30 @@ fun LandmarkObjectPage(
             ) {
                 Text(text = landmark.name, style = MaterialTheme.typography.headlineSmall)
 
-                val avg = landmark.averageRating
-                val reviews = landmark.reviewCount
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    RatingBar(average = avg)
+                    RatingBar(average = landmark.averageRating)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = if (reviews > 0)
-                            "(${String.format("%.1f", avg)} • $reviews reviews)"
+                        text = if (landmark.reviewCount > 0)
+                            "(${"%.1f".format(landmark.averageRating)} • ${landmark.reviewCount} reviews)"
                         else
                             "(No reviews yet)",
                         style = MaterialTheme.typography.labelLarge
                     )
                 }
 
+
                 Text(text = landmark.description, style = MaterialTheme.typography.bodyLarge)
             }
 
-            // --- Comments section ---
+
+// --- Comments section ---
             LandmarkCommentsSection(landmark)
         }
     }
 }
 
-@Composable
-private fun RatingBar(average: Double, modifier: Modifier = Modifier) {
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        for (i in 1..5) {
-            val filled = average >= i
-            val half = !filled && average >= (i - 0.5)
-            val icon = when {
-                filled -> Icons.Filled.Star
-                half -> Icons.Filled.StarHalf
-                else -> Icons.Outlined.StarBorder
-            }
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(18.dp)
-            )
-        }
-    }
-}
 
 @Composable
 private fun LandmarkCommentsSection(landmark: Landmark) {
@@ -178,6 +135,7 @@ private fun LandmarkCommentsSection(landmark: Landmark) {
             modifier = Modifier.padding(vertical = 4.dp)
         )
 
+
         if (landmark.comments.isEmpty()) {
             Text(
                 text = "No reviews yet.",
@@ -185,29 +143,9 @@ private fun LandmarkCommentsSection(landmark: Landmark) {
                 modifier = Modifier.padding(vertical = 8.dp)
             )
         } else {
-            landmark.comments.forEach { comment: LandmarkComment ->
+            landmark.comments.forEach { comment ->
                 CommentCard(comment)
             }
-        }
-    }
-}
-
-@Composable
-private fun CommentCard(comment: LandmarkComment) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(6.dp)
-        ) {
-            Text(text = comment.title, style = MaterialTheme.typography.titleMedium)
-            RatingBar(average = comment.rating.toDouble())
-            Text(text = comment.description, style = MaterialTheme.typography.bodyMedium)
         }
     }
 }
