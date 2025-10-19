@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/LandmarkListFragment"
-        android:name="at.fhj.iit.ims.mytrip.ui.LandmarkListFragment"
+        android:name="at.fhj.iit.ims.mytrip.LandmarkListFragment"
         android:label="Landmarks">
         <action
             android:id="@+id/action_LandmarkList_to_LandmarkObjectPageFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/LandmarkObjectPageFragment"
-        android:name="at.fhj.iit.ims.mytrip.ui.LandmarkObjectPageFragment"
+        android:name="at.fhj.iit.ims.mytrip.LandmarkObjectPageFragment"
         android:label="Details">
         <argument
             android:name="landmarkId"

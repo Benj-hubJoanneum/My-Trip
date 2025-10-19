@@ -1,4 +1,4 @@
-package at.fhj.iit.ims.mytrip.ui
+package at.fhj.iit.ims.mytrip
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import at.fhj.iit.ims.mytrip.objectpage.LandmarkObjectPage
 
 class LandmarkObjectPageFragment : Fragment() {
     override fun onCreateView(

@@ -1,4 +1,4 @@
-package at.fhj.iit.ims.mytrip.ui
+package at.fhj.iit.ims.mytrip
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,8 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import at.fhj.iit.ims.mytrip.R
-import at.fhj.iit.ims.mytrip.list.LandmarkRepository
+import at.fhj.iit.ims.mytrip.repository.LandmarkRepository
 import at.fhj.iit.ims.mytrip.model.Landmark
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
@@ -84,7 +84,7 @@ private fun LandmarkTile(
     landmark: Landmark,
     onClick: () -> Unit
 ) {
-    androidx.compose.foundation.layout.Column(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)

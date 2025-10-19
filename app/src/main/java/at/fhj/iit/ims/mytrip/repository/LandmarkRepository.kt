@@ -1,4 +1,4 @@
-package at.fhj.iit.ims.mytrip.list
+package at.fhj.iit.ims.mytrip.repository
 
 import at.fhj.iit.ims.mytrip.model.Landmark
 

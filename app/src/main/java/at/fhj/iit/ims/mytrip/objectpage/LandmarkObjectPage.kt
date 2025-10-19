@@ -1,4 +1,4 @@
-package at.fhj.iit.ims.mytrip.ui
+package at.fhj.iit.ims.mytrip.objectpage
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,9 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import at.fhj.iit.ims.mytrip.list.LandmarkRepository
+import at.fhj.iit.ims.mytrip.repository.LandmarkRepository
 import at.fhj.iit.ims.mytrip.model.Landmark
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
