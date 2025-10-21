@@ -15,6 +15,11 @@ data class Landmark(
     val name: String,
     val description: String,
     val imageUrl: String,
+    val latitude: Double,
+    val longitude: Double,
+    val cashless: Boolean = true,
+    val ticketURL: String,
+    val reservationURL: String,
     val comments: List<LandmarkComment> = emptyList()
 ) {
     /** Average rating across [comments]. Returns 0.0 if there are no comments. */

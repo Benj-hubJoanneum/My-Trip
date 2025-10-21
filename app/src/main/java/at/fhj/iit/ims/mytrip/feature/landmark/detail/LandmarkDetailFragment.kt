@@ -1,5 +1,5 @@
+// app/src/main/java/at/fhj/iit/ims/mytrip/feature/landmark/detail/LandmarkDetailFragment.kt
 package at.fhj.iit.ims.mytrip.feature.landmark.detail
-
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,23 +10,24 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import at.fhj.iit.ims.mytrip.core.data.DefaultLandmarkRepository
 
-
-/** Hosts the landmark detail screen. */
 class LandmarkDetailFragment : Fragment() {
     private val repo = DefaultLandmarkRepository()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(requireContext()).apply {
-        val id = requireArguments().getInt("landmarkId", -1)
+        val selectedId = requireArguments().getInt("landmarkId", -1)
+        val landmarks = repo.getAll()
+        val startIndex = landmarks.indexOfFirst { it.id == selectedId }.let { if (it >= 0) it else 0 }
+
         setContent {
             MaterialTheme {
-                LandmarkDetailScreen(landmark = repo.getById(id)) {
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
-                }
+                LandmarkPager(
+                    landmarks = landmarks,
+                    startIndex = startIndex
+                )
             }
         }
     }
